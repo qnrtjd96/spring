@@ -1,0 +1,1 @@
+document.write("js에서 작성한파일");
