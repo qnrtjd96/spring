@@ -24,6 +24,7 @@
 			<a href="javascript:delCheck(${vo.no})">삭제</a>
 		</c:if>
 	</div>
+	
 </div>
 </body>
 </html>
