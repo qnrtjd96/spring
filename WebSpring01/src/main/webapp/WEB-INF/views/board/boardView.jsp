@@ -24,7 +24,19 @@
 			<a href="javascript:delCheck(${vo.no})">삭제</a>
 		</c:if>
 	</div>
-	
+	<hr/>
+	<ul>
+		<c:forEach var="vo2" items="${list}">
+			<li>${vo2.userid} : ${vo2.content}</li>
+		</c:forEach>
+	</ul>
+	<div class="container">
+		<form method="post" action="/myapp/replyWriteOk">
+		<input type="hidden" name="${vo.no}">
+			댓글달기: <input type="text" name="content">
+		<input type="submit" value="댓글등록"/>
+		</form>
+	</div>
 </div>
 </body>
 </html>
