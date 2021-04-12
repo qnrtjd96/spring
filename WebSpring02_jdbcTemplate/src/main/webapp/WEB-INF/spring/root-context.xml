@@ -5,4 +5,11 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
+	<!-- 파일업로드를 하기위헤서 MultipartReslover객체가 필요함
+		 xml에 객체를 생성해놓으면 DispacherServlet에 참조하여 파일업로드를 구현한다.
+	 -->
+	 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">	
+	 	<property name="maxUploadSize" value="-1"></property>
+	 	<property name="defaultEncoding" value="UTF-8"></property>
+	 </bean>
 </beans>

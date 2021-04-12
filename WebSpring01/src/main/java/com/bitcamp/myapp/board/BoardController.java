@@ -59,18 +59,17 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/boardView")
-	public ModelAndView boardView(BoardVO vo, ReplyVO vo2) {
+	public ModelAndView boardView(BoardVO vo) {
 		ModelAndView mav = new ModelAndView();
 		
 		BoardDAO dao = new BoardDAO();
 		dao.boardSelect(vo);
 		
-		ReplyDAO dao2 = new ReplyDAO();
-		List<ReplyVO> list = dao2.ReplySelect(vo, vo2);
+		BoardReplyDAO dao2 = new BoardReplyDAO();
+		List<BoardReplyVO> list = dao2.replyAllRecord(vo.getNo());
 		
-		mav.addObject("vo", vo);
 		mav.addObject("list", list);
-
+		mav.addObject("vo", vo);
 		mav.setViewName("board/boardView");
 		
 		return mav;
