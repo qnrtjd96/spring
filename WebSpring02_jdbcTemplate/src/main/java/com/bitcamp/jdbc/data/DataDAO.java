@@ -59,4 +59,15 @@ public class DataDAO implements DataDAOImp {
 		System.out.println("vo.getNO = " + vo.getNo());
 		return template.update(sql, vo.getTitle(), vo.getContent(), vo.getFilename1(), vo.getFilename2(), vo.getNo(), vo.getUserid());
 	}
+	@Override
+	public int dataDelete(final int no, final String userid) {
+		String sql = "delete from data where no=? and userid=?";
+		return template.update(sql, new PreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, no);
+				ps.setString(2, userid);
+			}
+		});
+	}
 }
