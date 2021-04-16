@@ -29,7 +29,6 @@ public class BoardReplyController {
 			System.out.println("원글번호 = " + no);
 			BoardReplyDAO dao = new BoardReplyDAO();
 			return dao.replyAllRecord(no);
-			
 		}
 		
 		//댓글 수정

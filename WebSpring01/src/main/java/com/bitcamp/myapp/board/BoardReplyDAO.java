@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.jdbc.core.PreparedStatementSetter;
+
 import com.bitcamp.myapp.DBCPConnection;
 import com.bitcamp.myapp.reply.ReplyVO;
 
@@ -12,24 +14,13 @@ public class BoardReplyDAO extends DBCPConnection implements BoardReplyDAOImp {
 	
 	@Override
 	public int replyInsert(final BoardReplyVO vo) {
-		String sql = "insert into boardReply(num, no, content, userid, ip) "
-						+" values(boardsq.nextval,?,?,?,?) ";
-		return template.update(sql, new PreparedStatementSetter() {
 
-			@Override
-			public void setValues(PreparedStatement ps) throws SQLException {
-				ps.setInt(1, vo.getNo());
-				ps.setString(2, vo.getContent());
-				ps.setString(3, vo.getUserid());
-				ps.setString(4, vo.getIp());
-			}
-		});
 	}
 
 	@Override
 	public int replyUpdate(BoardReplyVO vo) {
 		String sql ="update boardReply set content=? where num=? and userid=?";
-		return template.update(sql, vo.getContent(), vo.getNum(), vo.getUserid());
+		return "";
 	}
 
 	@Override
