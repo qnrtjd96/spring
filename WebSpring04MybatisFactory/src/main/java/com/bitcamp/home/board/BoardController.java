@@ -16,6 +16,10 @@ public class BoardController {
 	@Autowired
 	SqlSession sqlSession;
 	
+	@RequestMapping("/NewFile")
+	public String NewFile() {
+		return "claseBoard/NewFile";
+	}
 	@RequestMapping("/boardList")
 	public ModelAndView allList() {
 		BoardDAOImp dao = sqlSession.getMapper(BoardDAOImp.class);
