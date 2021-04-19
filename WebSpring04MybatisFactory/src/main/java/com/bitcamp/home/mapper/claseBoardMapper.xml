@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.bitcamp.home.claseBoard.ClaseBoardDAOImp">
+  	<insert id="claseInsert" parameterType="com.bitcamp.home.claseBoard.ClaseBoardDTO"> <!-- currval 시퀀스 이전에사용했던거 똑같이사용!!!!! -->
+  		insert into claseBoard(no, subject, content, userid, ip, ref)
+  		values (boardsq.nextval, #{subject}, #{content}, #{userid}, #{ip}, boardsq.currval)
+  	</insert>
+  	<select id="claseAllRecord" resultType="com.bitcamp.home.claseBoard.ClaseBoardDTO">
+  			select no, subject, userid, hit, to_char(writedate, 'MM-DD MM:MI') writedate, ref, step
+  			from claseboard order by ref desc, lvl asc
+  	</select>
+  	<select id="claseSelect" resultType="com.bitcamp.home.claseBoard.ClaseBoardDTO">
+  		select * from
+  		(
+	  		select no, subject, userid, content, hit, writedate,
+	  		lead(subject,1,'다음글이없습니다.') over(order by no) next_title,
+	  		lead(no,1,null) over(order by no) next_no,
+	  		lag(subject,1,'이전글이없습니다.') over(order by no) pre_title,
+	  		lag(no,1,null) over(order by no) pre_no
+	  		from claseBoard
+  		)
+  		where no=#{param1}
+  	</select>
+  	<update id="hitcount">
+  		update claseBoard set hit=hit+1 where no=#{param1}
+  	</update>
+  	<select id="oriInfor" resultType="com.bitcamp.home.claseBoard.ClaseBoardDTO">
+  		select no, ref, step, lvl from claseBoard where no=#{param1} 
+  	</select>
+  	<update id="lvlcount" parameterType="com.bitcamp.home.claseBoard.ClaseBoardDTO">
+  		<![CDATA[update claseBoard set lvl=lvl+1 where ref=#{ref} and lvl>#{lvl}]]>
+  	</update>
+  	<insert id="claseDataInsert" parameterType="com.bitcamp.home.claseBoard.ClaseBoardDTO">
+  		insert into claseBoard(no, subject, content, userid, ip, ref, step, lvl)
+  		values (boardsq.nextval, #{subject}, #{content}, #{userid}, #{ip}, #{ref}, #{step}, #{lvl})
+  	</insert>
+  	<select id="getTotalRecord" resultType="int">
+  		select count(no) cnt from claseboard
+  	</select>
+  	<update id="claseUpdate" parameterType="com.bitcamp.home.claseBoard.ClaseBoardDTO">
+  		update claseboard set subject=#{subject}, content=#{content} where no=#{no} and userid=#{userid}
+  	</update>
+  	<select id ="getStep" resultType="com.bitcamp.home.claseBoard.ClaseBoardDTO">
+  		select step, userid from claseboard where no=#{param1}
+  	</select>
+  	<delete id ="claseDelete">
+  		delete from claseboard where ref=#{param1}
+  	</delete>
+  	<update id = "claseDeleteUpdate">
+  		update claseboard set subject='삭제된글입니다....', content='삭제된글입니다...' where no=#{param1} and userid=#{param2}
+  	</update>
+  	<!-- <select id= "lagLeadSelect" resultType="com.bitcamp.home.claseBoard.PrevNextVO">
+  		 select * from (
+		    select
+			    no,
+			    lag(no,1,0) over (order by no desc) preNo, 
+			    lag(subject, 1, '이전글이 없습니다.') over (order by no desc) prevSubject,
+			    lead(no,1,0) over (order by no desc) nextNo, 
+			    lead(subject, 1, '다음글이 없습니다.') over (order by no desc) nextSubject
+		    from claseboard where step=0 order by ref desc, lvl asc)
+		where no=#{param1};
+  	</select> -->
+  </mapper>
