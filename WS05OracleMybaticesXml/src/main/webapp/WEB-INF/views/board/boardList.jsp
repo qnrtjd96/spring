@@ -32,7 +32,7 @@
          <li>등록일</li>
          
          <c:forEach var="data" items="${list }">
-            <li>${data.no }</li>
+            <li>${data.no}</li>
             <li class="wordcut"><a href="boardView?no=${data.no }">${data.subject }</a></li>
             <li>${data.userid }</li>
             <li>${data.hit }</li>
