@@ -58,8 +58,8 @@ public class TransactionTestController {
 			int result1 = dao.boardInsert(vo);
 			int result2 = dao.boardInsert(vo2);
 			
-			//정상구현되면 commit 실행
-			transsactionManager.commit(status);
+				//정상구현되면 commit 실행
+				transsactionManager.commit(status);
 		}catch (Exception e) {}
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:boardList");
